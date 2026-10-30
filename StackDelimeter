@@ -1,0 +1,86 @@
+/* Description: program to check if brackets and parentheses match using a stack.
+Programmed by: Belar, Aze Jiazeler Jobe C. | BSIT | CC104 | Data Structures and Algorithm
+Last Modified: October 25, 2026
+Version: 1.0
+Acknowledgements: Gemini for building boilerplate.
+*/
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class StackDelimiter {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a sequence: ");
+        String input = scanner.nextLine();
+
+        Stack<Character> stack = new Stack<Character>();
+
+        System.out.println("\n--- Execution Trace ---");
+
+        boolean isValid = true;
+
+        for (int i = 0; i < input.length(); i++) {
+            char ch = input.charAt(i);
+
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(ch);
+                System.out.println("Read: " + ch);
+                System.out.println("Operation: PUSH");
+                System.out.println("Stack: " + stack);
+            }
+
+            else if (ch == ')' || ch == ']' || ch == '}') {
+                System.out.println("Read: " + ch);
+
+                if (stack.isEmpty()) {
+                    System.out.println("Operation: FAILED");
+                    System.out.println("Reason: Invalid - closing delimiter " + ch + " has no opening partner.");
+                    isValid = false;
+                    break;
+                }
+
+                char top = stack.peek();
+                System.out.println("Operation: PEEK -> " + top);
+
+                if (ch == ')' && top == '(') {
+                    stack.pop();
+                    System.out.println("Operation: POP");
+                    System.out.println("Stack: " + stack);
+                }
+                else if (ch == ']' && top == '[') {
+                    stack.pop();
+                    System.out.println("Operation: POP");
+                    System.out.println("Stack: " + stack);
+                }
+                else if (ch == '}' && top == '{') {
+                    stack.pop();
+                    System.out.println("Operation: POP");
+                    System.out.println("Stack: " + stack);
+                }
+                else {
+
+                    System.out.println("Reason: Invalid - mismatched delimiters. Found " + ch + " instead of match for " + top);
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        if (isValid == true) {
+
+            if (stack.isEmpty()) {
+                System.out.println("------------------------");
+                System.out.println("Result: Valid");
+            } else {
+                System.out.println("Reason: Invalid - unclosed opening delimiters left over: " + stack);
+                System.out.println("------------------------");
+            }
+        } else {
+            System.out.println("------------------------");
+        }
+    }
+}
+
